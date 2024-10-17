@@ -2,6 +2,7 @@
 
 import React, {useState, useEffect, Suspense} from 'react'
 import LoadingMenu from './components/loading-menu'
+import Image from 'next/image'
 
 const Expresso = React.lazy(() => import('./components/drinks/expresso'))
 const HomeMenu = React.lazy(() => import('./components/homemenu'))
@@ -15,6 +16,7 @@ const Pasta = React.lazy(() => import('./components/foods/pasta'))
 const BargainBites = React.lazy(() => import('./components/foods/bargainbites'))
 const SidesAndNibbles = React.lazy(() => import('./components/foods/sidesandnibbles'))
 const CarbsAndCaffeine = React.lazy(() => import('./components/foods/carbsandcaffeine'))
+const MenuModal = React.lazy(() => import('./components/menumodal'))
 
 export default function Menu() {
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -55,7 +57,7 @@ export default function Menu() {
         if (isLoading) return <LoadingMenu />;
         switch (selectedCategory) {
             case 'homemenu':
-                return <HomeMenu handleCategoryChange={handleCategoryChange} />; // I am passing down the function handleCategorychange to the homemenu component
+                return <HomeMenu handleCategoryChange={handleCategoryChange} />; // I am passing down the function handleCategoryChange to the homemenu component
             case 'expresso':
                 return <Expresso />;
             case 'brew':
@@ -85,9 +87,9 @@ export default function Menu() {
     }
 
     return (
-        <div className="w-full h-auto">
-            <div className="container mx-auto">
-                <div className="flex px-16 pt-6 pb-32">
+        <div className="w-full min-h-screen relative">
+            <div className="container mx-auto pb-32">
+                <div className="flex px-16 pt-6">
                     <div className="w-64">
                         <ul>
                             <li className="lg:text-2xl md:text-xl text-lg font-bold pb-8">
@@ -141,6 +143,8 @@ export default function Menu() {
                     </div>
                 </div>
             </div>
+
+            <MenuModal />
         </div>
     )
 }

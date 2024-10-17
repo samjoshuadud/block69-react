@@ -25,7 +25,7 @@ export default function Home() {
   ]
   return (
     <div className="w-full h-auto ">
-      <div className="container mx-auto">
+      <div>
         {homeValues.map((value, index) => (
           <div key={index} className="h-[40rem] bg-black mb-3 grid grid-cols-2">
             <div className="flex flex-col justify-center items-start p-8 md:p-12 lg:p-16 lg:pl-32">

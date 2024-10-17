@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import MenuModal from './menumodal';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Custom hook to get and update window size
 function useWindowSize() {
@@ -27,6 +29,7 @@ function useWindowSize() {
 
   return windowSize;
 }
+
 
 export default function PaginatedMenu({ items }) {
     // State for current page and items per page
@@ -104,12 +107,24 @@ export default function PaginatedMenu({ items }) {
     // Determine whether to show navigation buttons
     const showNavigation = totalPages > 1;
 
+    const [selectedItem, setSelectedItem] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = (item) => {
+        setSelectedItem(item);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
     return (
         <div>
             {/* Grid to display menu items */}
             <div className={`grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 py-6 px-3 justify-items-center transition-opacity duration-300 ease-in-out ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
                 {currentItems.map((item, index) => (
-                    <button key={index} className="flex flex-col cursor-default items-center justify-center">
+                    <button key={index} className="flex flex-col items-center justify-center" onClick={() => openModal(item)}>
                         {/* Image container */}
                         <div className="hover:scale-110 transition-all duration-200 w-36 h-36 relative">   
                             <Image 
@@ -154,6 +169,31 @@ export default function PaginatedMenu({ items }) {
                     </button>
                 </div>
             )}
+
+            {/* Modal with AnimatePresence */}
+            <AnimatePresence>
+                {isModalOpen && (
+                    <motion.div 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+                        onClick={closeModal}
+                    >
+                        <motion.div 
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="bg-white rounded-3xl p-8 max-w-3xl w-full mx-4"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <MenuModal isOpen={isModalOpen} onClose={closeModal} item={selectedItem} />
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }

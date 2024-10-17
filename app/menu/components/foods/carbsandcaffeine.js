@@ -3,7 +3,9 @@ import PaginatedMenu from "../PaginatedMenu"
 
 export default function CarbsAndCaffeine() {
     const carbsAndCaffeineItems = [
-        { name: "Clubhouse Sandwich", image: "/images/blk-menu/foods/CLUBHOUSE SANDWICH.png" },
+        { name: "Clubhouse Sandwich", image: "/images/blk-menu/foods/CLUBHOUSE SANDWICH.png",
+          description: "A classic triple-decker sandwich with layers of turkey, bacon, lettuce, and tomato.",
+          price: ["Solo: ₱159", "Savor: ₱249"] },
     ];
 
     return (
