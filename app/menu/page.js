@@ -17,6 +17,7 @@ const BargainBites = React.lazy(() => import('./components/foods/bargainbites'))
 const SidesAndNibbles = React.lazy(() => import('./components/foods/sidesandnibbles'))
 const CarbsAndCaffeine = React.lazy(() => import('./components/foods/carbsandcaffeine'))
 const MenuModal = React.lazy(() => import('./components/menumodal'))
+const DrinkMenu = React.lazy(() => import('./components/drinks/DrinkMenu'))
 
 export default function Menu() {
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -55,35 +56,25 @@ export default function Menu() {
 
     const renderMenu = () => {
         if (isLoading) return <LoadingMenu />;
-        switch (selectedCategory) {
-            case 'homemenu':
-                return <HomeMenu handleCategoryChange={handleCategoryChange} />; // I am passing down the function handleCategoryChange to the homemenu component
-            case 'expresso':
-                return <Expresso />;
-            case 'brew':
-                return <Brew />;
-            case 'noncoffeeandtea':
-                return <NonCoffeeAndTea />;
-            case 'matcha':
-                return <Matcha />;
-            case 'beverages':
-                return <Beverages />;
-            case 'alldaybreakfast':
-                return <AllDayBreakfast />;
-            case 'silog':
-                return <Silog />;
-            case 'pasta':
-                return <Pasta />;
-            case 'bargainbites':
-                return <BargainBites />;
-            case 'sidesandnibbles':
-                return <SidesAndNibbles />;
-            case 'carbsandcaffeine':
-                return <CarbsAndCaffeine />;
 
+        switch(selectedCategory) {
+            case 'homemenu': 
+                return <HomeMenu handleCategoryChange={handleCategoryChange} />
             default:
-                return <HomeMenu handleCategoryChange={handleCategoryChange} />; // this is the default case, it will return the homemenu component and pass down the handleCategoryChange function to it
+                return <DrinkMenu category={selectedCategory} />
+
+                
         }
+
+        // if ('homemenu' === selectedCategory) {
+        //     return <HomeMenu handleCategoryChange={handleCategoryChange} />
+        // }
+        // else {
+        //     return <Beverages />
+        //     // <DrinkMenu category={selectedCategory} />
+        // }
+        
+
     }
 
     return (
@@ -101,11 +92,11 @@ export default function Menu() {
                             <ul className="py-2">
                                 <li className="lg:text-xl md:text-lg text-md font-semibold">Drinks</li>
                                 {Object.entries({ // this is an object dictionary that contains the caption and the value (key and value)
-                                    'Expresso': 'expresso',
-                                    'Brew': 'brew',
-                                    'Non Coffee And Tea': 'noncoffeeandtea',
-                                    'Matcha': 'matcha',
-                                    'Beverages': 'beverages'
+                                    'Expresso': 'Expresso',
+                                    'Brew': 'Brew',
+                                    'Non Coffee And Tea': 'Non Coffee and Tea',
+                                    'Matcha': 'Matcha',
+                                    'Beverages': 'Beverages'
                                 }).map(([caption, value]) => (
                                     <li key={value} className="py-1">
                                         <MenuLink category={value}> {/* this is the menu link component that is passed down to the menu link*/}
@@ -118,12 +109,12 @@ export default function Menu() {
                             <ul className="py-6">
                                 <li className="lg:text-xl md:text-lg text-md font-semibold">Foods</li>
                                 {Object.entries({
-                                    'All Day Breakfast': 'alldaybreakfast',
-                                    'Silog': 'silog',
-                                    'Pasta': 'pasta',
-                                    'Bargain Bites': 'bargainbites',
-                                    'Sides and Nibbles': 'sidesandnibbles',
-                                    'Carbs and Caffeine': 'carbsandcaffeine'
+                                    'All Day Breakfast': 'All Day Breakfast',
+                                    'Silog': 'Silog',
+                                    'Pasta': 'Pasta',
+                                    'Bargain Bites': 'Bargain Bites',
+                                    'Sides and Nibbles': 'Sides and Nibbles',
+                                    'Carbs and Caffeine': 'Carts and Caffeine'
                                 }).map(([caption, value]) => (
                                     <li key={value} className="py-1">
                                         <MenuLink category={value}>
