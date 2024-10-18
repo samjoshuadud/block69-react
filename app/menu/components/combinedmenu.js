@@ -1,13 +1,8 @@
-import Image from "next/image";
-import PaginatedMenu from "../PaginatedMenu";
-import { useState } from "react";
+import PaginatedMenu from "./PaginatedMenu";
 
-
-// FOR EXPERIMENTATION PURPOSES ONLY, CHANGING CATEGORY
-
-
-const drinkCategories = {
-    
+// Combine both drinkCategories and foodCategories into one object
+const combinedCategories = {
+    "Drinks": {
         "Expresso": [
             { name: "Spanish Latte", image: "/images/blk-menu/drinks/SPANISH LATTE.png", 
              description: "Enjoy our creamy Spanish Latte, made with premium espresso, sweetened condensed milk, and whole milk. Perfectly balanced for a smooth, sweet coffee experience.", 
@@ -98,25 +93,130 @@ const drinkCategories = {
               description: "Bold, refreshing Pepsi with its distinct cola flavor. A perfect fizzy companion to your food.",
               price: ["Can: ₱59", "Bottle: ₱79"] },
         ]
+        // Add more drink categories like "Non Coffee and Tea", "Matcha", "Beverages"...
+    },
+    "Foods": {
+        "All Day Breakfast": [
+            { name: "French Toast", image: "/images/blk-menu/foods/FRENCH TOAST.png",
+                description: "Thick slices of bread dipped in a rich egg mixture, grilled to golden perfection, and served with maple syrup.",
+                price: ["Solo: ₱149", "Savor: ₱249"] },
+              { name: "Poffertjes", image: "/images/blk-menu/foods/POFFERTJES.png",
+                description: "Mini Dutch pancakes, fluffy and light, served with butter and powdered sugar.",
+                price: ["Solo: ₱129", "Savor: ₱219"] },
+              { name: "Fluffy Pancakes", image: "/images/blk-menu/foods/FLUFFY PANCAKES.png",
+                description: "Stack of light and airy pancakes, served with butter and your choice of syrup.",
+                price: ["Solo: ₱139", "Savor: ₱229"] },
+              { name: "Classic Waffles", image: "/images/blk-menu/foods/CLASSIC WAFFLES.png",
+                description: "Crispy on the outside, soft on the inside, served with whipped cream and fresh berries.",
+                price: ["Solo: ₱159", "Savor: ₱259"] },
+              { name: "Marga's Fave", image: "/images/blk-menu/foods/MARGAS FAVE.png",
+                description: "A house special featuring a mix of breakfast favorites, curated by our chef Marga.",
+                price: ["Solo: ₱189", "Savor: ₱299"] },
+              { name: "Breakfast Platter", image: "/images/blk-menu/foods/BREAKFAST PLATTER.png",
+                description: "A hearty combination of eggs, bacon, sausage, hash browns, and toast to start your day right.",
+                price: ["Solo: ₱199", "Savor: ₱319"] }, // Update this image path when available
+        ]
+    ,
     
-      };
+        "Pasta": [
+            { name: "Chicken Pesto", image: "/images/blk-menu/foods/CHICKEN PESTO.png",
+                description: "Tender chicken pieces in a creamy pesto sauce, served over al dente pasta.",
+                price: ["Solo: ₱159", "Savor: ₱249"] },
+              { name: "Gourmet Tuyo", image: "/images/blk-menu/foods/GOURMENT TUYO.png",
+                description: "A Filipino-inspired pasta dish featuring dried fish flakes in olive oil and garlic.",
+                price: ["Solo: ₱139", "Savor: ₱229"] },
+              { name: "Aglio Olio", image: "/images/blk-menu/foods/AGLIO OLIO.png",
+                description: "Classic Italian pasta with garlic, olive oil, and red pepper flakes.",
+                price: ["Solo: ₱129", "Savor: ₱219"] },
+              { name: "Garlic Bread", image: "/images/blk-menu/foods/GARLIC BREAD.png",
+                description: "Crispy baguette slices toasted with garlic butter and herbs.",
+                price: ["Solo: ₱79", "Savor: ₱129"] },
+        ]
+    ,
+    
+        "Bargain Bites": [
+            { name: "Chicken Poppers", image: "/images/blk-menu/foods/CHICKEN POPPERS.png",
+                description: "Crispy, bite-sized chicken pieces perfect for snacking or as a side dish.",
+                price: ["Solo: ₱99", "Savor: ₱159"] },
+              { name: "Chicken Teriyaki", image: "/images/blk-menu/foods/CHICKEN TERIYAKI.png",
+                description: "Tender chicken glazed with our sweet and savory teriyaki sauce, served with rice.",
+                price: ["Solo: ₱129", "Savor: ₱199"] },
+              { name: "Pork Teriyaki", image: "/images/blk-menu/foods/PORK TERIYAKI.png",
+                description: "Juicy pork slices grilled and basted with our signature teriyaki sauce, served with rice.",
+                price: ["Solo: ₱139", "Savor: ₱219"] },
+              { name: "Chicken Katsudon", image: "/images/blk-menu/foods/CHICKEN KATSUDON.png",
+                description: "Crispy chicken cutlet served over rice with a savory-sweet sauce and beaten egg.",
+                price: ["Solo: ₱149", "Savor: ₱229"] },
+              { name: "Pork Katsudon", image: "/images/blk-menu/foods/PORK KATSUDON.png",
+                description: "Breaded pork cutlet topped with egg and onions in a dashi-based sauce, served over rice.",
+                price: ["Solo: ₱159", "Savor: ₱239"] },
+              { name: "Breakfast Platter", image: "/images/blk-menu/foods/BREAKFAST PLATTER.png",
+                description: "A hearty combination of eggs, bacon, sausage, hash browns, and toast to start your day right.",
+                price: ["Solo: ₱179", "Savor: ₱269"] },
+        ]
+    ,
+    
+        "Sides and Nibbles": [
+            { name: "Fries", image: "/images/blk-menu/foods/FRIES.png",
+                description: "Crispy golden fries, perfect as a side or snack.",
+                price: ["Solo: ₱79", "Savor: ₱129"] },
+              { name: "Calamari Mix", image: "/images/blk-menu/foods/CALAMARI MIX.png",
+                description: "A delightful mix of crispy calamari and assorted seafood.",
+                price: ["Solo: ₱149", "Savor: ₱239"] },
+              { name: "Fries Before Guys", image: "/images/blk-menu/foods/FRIES BEFORE GUYS.png",
+                description: "Our signature loaded fries with special toppings.",
+                price: ["Solo: ₱119", "Savor: ₱189"] },
+              { name: "Mozzarella Balls", image: "/images/blk-menu/foods/MOZZARELLA BALLS.png",
+                description: "Crispy breaded mozzarella balls, gooey on the inside.",
+                price: ["Solo: ₱129", "Savor: ₱209"] },
+              { name: "Calamari", image: "/images/blk-menu/foods/CALAMARI.png",
+                description: "Tender calamari rings, lightly battered and fried to perfection.",
+                price: ["Solo: ₱139", "Savor: ₱229"] },
+              { name: "Hash Brown", image: "/images/blk-menu/foods/HASHBROWN.png",
+                description: "Crispy shredded potato patties, golden brown and delicious.",
+                price: ["Solo: ₱69", "Savor: ₱109"] },
+        ]
+    ,
+    
+        "Carbs and Caffeine": [
+            { name: "Clubhouse Sandwich", image: "/images/blk-menu/foods/CLUBHOUSE SANDWICH.png",
+                description: "A classic triple-decker sandwich with layers of turkey, bacon, lettuce, and tomato.",
+                price: ["Solo: ₱159", "Savor: ₱249"] },
+        ]
+        // Add more food categories like "Pasta", "Sandwiches", etc.
+    }
+};
 
-export default function DrinkMenu({category}) {
-    const [border, setBorder] = useState('border');
+  
 
+export default function CombinedMenu({ categoryType, category }) {
+    // categoryType could be "Drinks" or "Foods"
+    const items = combinedCategories[categoryType][category];
 
-    return (
-        <div>
-          {/*Problem is Here, handling it, it should select only the passed value*/ }
-          {/* {console.log(category)} */}
-          {/* {console.log(drinkCategories[category])} */}
-          
-          
-          <h1 className="text-xl font-semibold ">Brew</h1> 
-          <p className="text-sm text-gray-500 border-b border-black p-2 pl-0 border-opacity-50">Ice/Hot</p>
-          
-            <PaginatedMenu items={drinkCategories[category]} />
-        </div>
-    );
-
+    if (categoryType === "Drinks") {
+        const isBrewOrExpresso = category === 'Brew' || category === 'Expresso';
+      
+        return (
+          <div>
+            <h1
+              className={`text-xl font-semibold ${!isBrewOrExpresso ? 'border-b border-black p-2 pl-0 border-opacity-50' : ''}`}
+            >
+              {category}
+            </h1>
+      
+            {isBrewOrExpresso && (
+              <p className="text-sm text-gray-500 border-b border-black p-2 pl-0 border-opacity-50">Ice/Hot</p>
+            )}
+            
+            <PaginatedMenu items={items} />
+          </div>
+        );
+    } else {
+        return (
+            <div>
+                <h1 className="text-xl font-semibold border-b border-black p-2 pl-0 border-opacity-50">{category}</h1>
+                <PaginatedMenu items={items} />
+            </div>
+        );
+    }
 }
