@@ -207,7 +207,6 @@ export default function CombinedMenu({ categoryType, category }) {
             {isBrewOrExpresso && (
               <p className="text-sm text-gray-500 border-b border-black p-2 pl-0 border-opacity-50">Ice/Hot</p>
             )}
-            
             <PaginatedMenu items={items} />
           </div>
         );
@@ -220,3 +219,5 @@ export default function CombinedMenu({ categoryType, category }) {
         );
     }
 }
+
+export { combinedCategories };

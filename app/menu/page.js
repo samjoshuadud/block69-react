@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, Suspense } from 'react'
 import LoadingMenu from './components/loading-menu'
-
+import { combinedCategories } from './components/combinedmenu'
 
 const HomeMenu = React.lazy(() => import('./components/homemenu'))
 const CombinedMenu = React.lazy(() => import('./components/combinedmenu'))
@@ -70,39 +70,18 @@ export default function Menu() {
                                 </MenuLink>
                             </li>
                             
-                            <ul className="py-2">
-                                <li className="lg:text-xl md:text-lg text-md font-semibold">Drinks</li>
-                                {Object.entries({
-                                    'Expresso': 'Expresso',
-                                    'Brew': 'Brew',
-                                    'Non Coffee And Tea': 'Non Coffee and Tea',
-                                    'Matcha': 'Matcha',
-                                    'Beverages': 'Beverages'
-                                }).map(([caption, value]) => (
-                                    <li key={value} className="py-1">
-                                        <MenuLink category={value} type="Drinks">
-                                            {caption}
-                                        </MenuLink>
-                                    </li>
-                                ))}
-                            </ul>
-
-                            <ul className="py-6">
-                                <li className="lg:text-xl md:text-lg text-md font-semibold">Foods</li>
-                                {Object.entries({
-                                    'All Day Breakfast': 'All Day Breakfast',
-                                    'Pasta': 'Pasta',
-                                    'Bargain Bites': 'Bargain Bites',
-                                    'Sides and Nibbles': 'Sides and Nibbles',
-                                    'Carbs and Caffeine': 'Carbs and Caffeine'
-                                }).map(([caption, value]) => (
-                                    <li key={value} className="py-1">
-                                        <MenuLink category={value} type="Foods">
-                                            {caption}
-                                        </MenuLink>
-                                    </li>
-                                ))}
-                            </ul>
+                            {Object.entries(combinedCategories).map(([type, categories]) => (
+                                <ul key={type} className="py-2">
+                                    <li className="lg:text-xl md:text-lg text-md font-semibold">{type}</li>
+                                    {Object.keys(categories).map((category) => (
+                                        <li key={category} className="py-1">
+                                            <MenuLink category={category} type={type}>
+                                                {category}
+                                            </MenuLink>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ))}
                         </ul>
                     </div>
 

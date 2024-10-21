@@ -2,26 +2,38 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { usePathname } from 'next/navigation';
+import { useState, useEffect } from "react";
+import { usePathname} from 'next/navigation';
+import Loading from '../menu/components/loading-menu'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const pathname = usePathname();
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [pathname]);
 
   const NavLink = ({ href, children }) => {
     const isActive = pathname === href;
     return (
       <Link 
         href={href} 
-        className={`hover:border-b hover:border-black transition-colors  ${
+        className={`hover:border-b hover:border-black transition-colors ${
           isActive ? 'border-b-2 border-black' : ''
         }`}
+        onClick={() => setIsLoading(true)}
       >
         {children}
       </Link>
     );
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
 
   return (
     <header className="w-full h-auto md:h-[7rem] flex flex-col md:flex-row items-center mb-8" style={{boxShadow: "0em 1px 10px rgb(0, 0, 0, .2)"}}>
