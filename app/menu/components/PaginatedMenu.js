@@ -39,7 +39,7 @@ export default function PaginatedMenu({ items }) {
     
     // Get current window size
     const size = useWindowSize();
-  
+    
     // Effect to update itemsPerPage based on window width
     useEffect(() => {
       if (size.width >= 1280) { // xl
@@ -57,7 +57,6 @@ export default function PaginatedMenu({ items }) {
     // Calculate start and end index for current page
     const startIndex = currentPage * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    
     // Slice the items array to get only the items for the current page
     const currentItems = items.slice(startIndex, endIndex);
   
