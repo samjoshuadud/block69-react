@@ -3,9 +3,9 @@
 import React, { useState, useEffect, Suspense } from 'react'
 import LoadingMenu from './components/loading-menu'
 import { combinedCategories } from './components/combinedmenu'
+import CombinedMenu from './components/combinedmenu'
 
 const HomeMenu = React.lazy(() => import('./components/homemenu'))
-const CombinedMenu = React.lazy(() => import('./components/combinedmenu'))
 
 export default function Menu() {
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -20,7 +20,6 @@ export default function Menu() {
             setCategoryType(savedCategoryType);
         } else {
             setSelectedCategory('homemenu');
-            setCategoryType('Drinks');
         }
         setIsLoading(false);
     }, []);
@@ -54,6 +53,11 @@ export default function Menu() {
         if (selectedCategory === 'homemenu') {
             return <HomeMenu handleCategoryChange={handleCategoryChange} />;
         } else {
+            console.log("Before rendering CombinedMenu:", { selectedCategory, categoryType });
+            if (!categoryType) {
+                console.error("Category type is undefined for category:", selectedCategory);
+                return <div>Error: Category type is undefined</div>;
+            }
             return <CombinedMenu categoryType={categoryType} category={selectedCategory} />;
         }
     }
